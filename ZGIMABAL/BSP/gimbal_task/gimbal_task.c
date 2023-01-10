@@ -28,22 +28,23 @@ Gimbal_Control_t gimbal_control;
 Gimbal_Control_t gimbal_control2;
 //·¢ËÍµÄcan Ö¸Áî
 static int16_t Yaw_Can_Set_Current = 0, Pitch_Can_Set_Current = 0, Shoot_Can_Set_Current = 0;
-fp32 Pitch_speed_pid[3] = {320,0,0};
-fp32 Yaw_speed_pid[3] = {320,0,100};
-fp32 YAW_GYRO_ABSOLUTE_PID_KP= 6.0f;
+
+fp32 Yaw_speed_pid[3] = {30,0,0};
+fp32 YAW_GYRO_ABSOLUTE_PID_KP= 200.0f;
 fp32 YAW_GYRO_ABSOLUTE_PID_KI =0.0f;
-fp32 YAW_GYRO_ABSOLUTE_PID_KD =300.0f;
-fp32 YAW_max_out = 66;
+fp32 YAW_GYRO_ABSOLUTE_PID_KD =0.0f;
+fp32 YAW_max_out = 10000;
 fp32 YAW_gyro_max_iout = 500;
 fp32 YAW_gyro_max_out = 30000;
 
-fp32 pitch_GYRO_ABSOLUTE_PID_KP =10.0f;
-fp32 pitch_GYRO_ABSOLUTE_PID_KI =0.01f;
-fp32 pitch_GYRO_ABSOLUTE_PID_KD =300.0f;
-fp32 pitch_max_out = 100;
+fp32 Pitch_speed_pid[3] = {10,0,0};
+fp32 pitch_GYRO_ABSOLUTE_PID_KP =200.0f;
+fp32 pitch_GYRO_ABSOLUTE_PID_KI =0.1f;
+fp32 pitch_GYRO_ABSOLUTE_PID_KD =0.0f;
+fp32 pitch_max_out = 10000;
 fp32 pitch_gyro_max_iout=2000;
 fp32 pitch_gyro_out=30000;
-fp32 pitch_max_iout = 38;
+fp32 pitch_max_iout = 500;
 void gimbal_task(void const * argument)
 {
 	GIMBAL_Init(&gimbal_control);
@@ -277,8 +278,8 @@ static void GIMBAL_Feedback_Update(Gimbal_Control_t *gimbal_feedback_update)
     }
   gimbal_feedback_update->gimbal_yaw_motor.absolute_angle = gimbal_feedback_update->gimbal_INT_gyro_point->GET_YAW;
   gimbal_feedback_update->gimbal_pitch_motor.absolute_angle= gimbal_feedback_update->gimbal_INT_gyro_point->GET_ROW;
-  gimbal_feedback_update->gimbal_pitch_motor.motor_gyro=gimbal_feedback_update->gimbal_pitch_motor.gimbal_motor_measure->speed_rpm;
-	gimbal_feedback_update->gimbal_yaw_motor.motor_gyro=gimbal_feedback_update->gimbal_yaw_motor.gimbal_motor_measure->speed_rpm;
+  gimbal_feedback_update->gimbal_pitch_motor.motor_gyro=gimbal_feedback_update->gimbal_INT_gyro_point->get_speed_Vy;
+	gimbal_feedback_update->gimbal_yaw_motor.motor_gyro=gimbal_feedback_update->gimbal_INT_gyro_point->get_speed_Vz;
 	gimbal_feedback_update->gimbal_pitch_motor.relative_angle=gimbal_feedback_update->gimbal_pitch_motor.gimbal_motor_measure->ecd;
 	gimbal_feedback_update->gimbal_yaw_motor.relative_angle=gimbal_feedback_update->gimbal_yaw_motor.gimbal_motor_measure->ecd_out;
 }

@@ -5,11 +5,11 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.30.0.0
 Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 1 Hudie, 1, LIC=ZB4EI-TRHLN-WFMI7-EH8J2-HRE7D-FZXKV
+License Information: 1 Administrator, 11, LIC=ZB4EI-TTEW6-JJH6S-LPW19-CWLZG-69275
  
 Tool Versions:
 Toolchain:       MDK-ARM Plus  Version: 5.30.0.0
-Toolchain Path:  D:\MDK5\ARM\ARMCC\Bin
+Toolchain Path:  F:\mdk5\Core\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 6 (build 750)
 Assembler:       Armasm.exe V5.06 update 6 (build 750)
 Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
@@ -21,61 +21,45 @@ Target DLL:      CMSIS_AGDI.dll V1.32.5.0
 Dialog DLL:      TCM.DLL V1.42.0.0
  
 <h2>Project:</h2>
-C:\Users\Hudie\Desktop\ZGIMABAL\MDK-ARM\Whole_car_C.uvprojx
-Project File Date:  12/09/2022
+D:\RMÈ«ÏòÂÖ\ZGIMABAL\MDK-ARM\Whole_car_C.uvprojx
+Project File Date:  01/10/2023
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\MDK5\ARM\ARMCC\Bin'
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'F:\mdk5\Core\ARM\ARMCC\Bin'
 Build target 'Whole_car_C'
-compiling shoot_task.c...
-..\BSP\shoot_task\shoot_task.c(163): warning:  #177-D: variable "first_time"  was declared but never referenced
-  static long long first_time,second_time,keep_time_ON,keep_time_OFF,stoppage_Time,reverse_Time;
-..\BSP\shoot_task\shoot_task.c(163): warning:  #177-D: variable "second_time"  was declared but never referenced
-  static long long first_time,second_time,keep_time_ON,keep_time_OFF,stoppage_Time,reverse_Time;
-..\BSP\shoot_task\shoot_task.c(163): warning:  #177-D: variable "keep_time_ON"  was declared but never referenced
-  static long long first_time,second_time,keep_time_ON,keep_time_OFF,stoppage_Time,reverse_Time;
-..\BSP\shoot_task\shoot_task.c(163): warning:  #177-D: variable "keep_time_OFF"  was declared but never referenced
-  static long long first_time,second_time,keep_time_ON,keep_time_OFF,stoppage_Time,reverse_Time;
-..\BSP\shoot_task\shoot_task.c(163): warning:  #177-D: variable "stoppage_Time"  was declared but never referenced
-  static long long first_time,second_time,keep_time_ON,keep_time_OFF,stoppage_Time,reverse_Time;
-..\BSP\shoot_task\shoot_task.c(163): warning:  #177-D: variable "reverse_Time"  was declared but never referenced
-  static long long first_time,second_time,keep_time_ON,keep_time_OFF,stoppage_Time,reverse_Time;
-..\BSP\shoot_task\shoot_task.c(164): warning:  #177-D: variable "KEYBORD_FLAG"  was declared but never referenced
-  static int KEYBORD_FLAG,stoppage_FLAG;
-..\BSP\shoot_task\shoot_task.c(164): warning:  #177-D: variable "stoppage_FLAG"  was declared but never referenced
-  static int KEYBORD_FLAG,stoppage_FLAG;
-..\BSP\shoot_task\shoot_task.c(377): warning:  #177-D: variable "Error_Kaluli"  was declared but never referenced
-  	static float Error_Kaluli;
-..\BSP\shoot_task\shoot_task.c(10): warning:  #177-D: variable "Bullet_mode"  was declared but never referenced
-  static char Bullet_mode = Switich_OFF;
-..\BSP\shoot_task\shoot_task.c: 10 warnings, 0 errors
+compiling gimbal_task.c...
+..\BSP\gimbal_task\gimbal_task.c(30): warning:  #177-D: variable "Shoot_Can_Set_Current"  was declared but never referenced
+  static int16_t Yaw_Can_Set_Current = 0, Pitch_Can_Set_Current = 0, Shoot_Can_Set_Current = 0;
+..\BSP\gimbal_task\gimbal_task.c(101): warning:  #177-D: function "Gimbal_PID_clear"  was declared but never referenced
+  static void Gimbal_PID_clear(Gimbal_PID_t *gimbal_pid_clear)
+..\BSP\gimbal_task\gimbal_task.c: 2 warnings, 0 errors
 linking...
 Program Size: Code=41136 RO-data=680 RW-data=620 ZI-data=21628  
 FromELF: creating hex file...
-"Whole_car_C\Whole_car_C.axf" - 0 Error(s), 10 Warning(s).
+"Whole_car_C\Whole_car_C.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                http://www.keil.com/pack/ARM.CMSIS.5.7.0.pack
-                ARM.CMSIS.5.7.0
-                CMSIS (Cortex Microcontroller Software Interface Standard)
-   * Component: CORE Version: 5.4.0
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
 
 Package Vendor: Keil
-                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.9.0.pack
-                Keil.STM32F4xx_DFP.2.9.0
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.16.0.pack
+                Keil.STM32F4xx_DFP.2.16.0
                 STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\_Whole_car_C
-  C:\Users\Hudie\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
-  C:\Users\Hudie\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+  F:\mdk5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include
+  F:\mdk5\Packs\Keil\STM32F4xx_DFP\2.16.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:5.4.0
-Build Time Elapsed:  00:00:07
+   * Component: ARM::CMSIS:CORE:5.6.0
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
