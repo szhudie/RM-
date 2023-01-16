@@ -397,7 +397,7 @@ void Shoot_GiveCUR(Shoot_DATA *SHOOT_CUR)
 //	 {                           
 //		 E_Shoot_Rate=15;	 //发射射频为猛烈发射模式的射频
 //	 }
-	 E_Shoot_Rate = 30;
+	 E_Shoot_Rate = 15;
 	 return E_Shoot_Rate;           //返回射频
  }
 

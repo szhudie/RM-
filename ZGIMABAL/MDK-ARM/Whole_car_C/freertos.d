@@ -1,7 +1,7 @@
 whole_car_c\freertos.o: ../Core/Src/freertos.c
 whole_car_c\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-whole_car_c\freertos.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
-whole_car_c\freertos.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
+whole_car_c\freertos.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+whole_car_c\freertos.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
 whole_car_c\freertos.o: ../Core/Inc/FreeRTOSConfig.h
 whole_car_c\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 whole_car_c\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

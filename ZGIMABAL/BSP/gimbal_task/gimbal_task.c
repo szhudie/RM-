@@ -38,13 +38,13 @@ fp32 YAW_gyro_max_iout = 500;
 fp32 YAW_gyro_max_out = 30000;
 
 fp32 Pitch_speed_pid[3] = {10,0,0};
-fp32 pitch_GYRO_ABSOLUTE_PID_KP =200.0f;
+fp32 pitch_GYRO_ABSOLUTE_PID_KP =500.0f;
 fp32 pitch_GYRO_ABSOLUTE_PID_KI =0.1f;
 fp32 pitch_GYRO_ABSOLUTE_PID_KD =0.0f;
-fp32 pitch_max_out = 10000;
+fp32 pitch_max_out = 5000;
 fp32 pitch_gyro_max_iout=2000;
 fp32 pitch_gyro_out=30000;
-fp32 pitch_max_iout = 500;
+fp32 pitch_max_iout = 2000;
 void gimbal_task(void const * argument)
 {
 	GIMBAL_Init(&gimbal_control);
