@@ -111,14 +111,14 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
         chassis_behaviour_mode = CHASSIS_INFANTRY_FOLLOW_GIMBAL_YAW; //当行为是正常步兵跟随云台，则设置底盘状态机为 底盘跟随云台角度 状态机
     }
 		
-//		if(switch_is_mid(chassis_move_mode->chassis_RC->rc.s[1]))
-//		{
-//		 chassis_move_mode->swing_flag = 1;
-//		}
-//		else
-//		{
-//		 chassis_move_mode->swing_flag = 0;
-//		}
+		if(switch_is_mid(chassis_move_mode->chassis_RC->rc.s[1]))
+		{
+		 chassis_move_mode->swing_flag = 1;
+		}
+		else
+		{
+		 chassis_move_mode->swing_flag = 0;
+		}
 		
 				//接收机，陀螺仪断线,YAW轴断线，云台不动
 		if(Detect_Judeg(5))
@@ -225,7 +225,7 @@ static void chassis_no_move_control(fp32 *vx_set, fp32 *vy_set, fp32 *wz_set, ch
   * @retval         返回空
   */
 
-static void chassis_infantry_follow_gimbal_yaw_control(fp32 *vx_set, fp32 *vy_set, fp32 *angle_set, chassis_move_t *chassis_move_rc_to_vector)
+                                                                                                                                                                                             static void chassis_infantry_follow_gimbal_yaw_control(fp32 *vx_set, fp32 *vy_set, fp32 *angle_set, chassis_move_t *chassis_move_rc_to_vector)
 {
     if (vx_set == NULL || vy_set == NULL || angle_set == NULL || chassis_move_rc_to_vector == NULL)
     {
@@ -246,15 +246,15 @@ static void chassis_infantry_follow_gimbal_yaw_control(fp32 *vx_set, fp32 *vy_se
     }
 		if(chassis_move_rc_to_vector->swing_flag == 1)
 		{
-//			if(chassis_move_rc_to_vector->chassis_yaw>=max_angle)
-//			{
-//				chassis_writhe_speed_fac=-1;
-//			}
-//			else if(chassis_move_rc_to_vector->chassis_yaw<=-max_angle)
-//			{
-//				chassis_writhe_speed_fac=1;
-//			}
-//			*angle_set = chassis_writhe_speed_fac;
+			if(chassis_move_rc_to_vector->chassis_yaw>=max_angle)
+			{
+				chassis_writhe_speed_fac=-1;
+			}
+			else if(chassis_move_rc_to_vector->chassis_yaw<=-max_angle)
+			{
+				chassis_writhe_speed_fac=1;
+			}
+			*angle_set = chassis_writhe_speed_fac;
 			*angle_set = max_angle;
 		}
 		else

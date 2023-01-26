@@ -60,13 +60,14 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop);
 #if INCLUDE_uxTaskGetStackHighWaterMark
 uint32_t chassis_high_water;
 #endif
- fp32 motor_speed_pid[3] = {700,0,0};
- fp32 motor_angle_pid[3] = {0.8,0,0};
+ fp32 motor_speed_pid[3] = {700,0.3,0};
+ fp32 motor_angle_pid[3] = {1.9,0,0};
  fp32 M3505_MOTOR_SPEED_PID_MAX_OUT=10000.0f;
 fp32 M3505_MOTOR_SPEED_PID_MAX_IOUT=500.0f;
  fp32 CHASSIS_FOLLOW_GIMBAL_PID_MAX_OUT=100.0f;
 fp32 CHASSIS_FOLLOW_GIMBAL_PID_MAX_IOUT=0.2f;
  fp32 CHASSIS_WZ_SET_SCALE = 0.0f;
+ fp32 CHASSIS_WZ_SET_YOU = 0.0f;
 //主任务
 void chassis_task(void *pvParameters)
 {
@@ -334,10 +335,10 @@ static void chassis_set_contorl(chassis_move_t *chassis_move_control)
 static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 wheel_speed[4])
 {
     //旋转的时候， 由于云台靠前，所以是前面两轮 0 ，1 旋转的速度变慢， 后面两轮 2,3 旋转的速度变快
-    wheel_speed[0] = -vx_set - vy_set + (CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[1] = vx_set - vy_set + (CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[2] = vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[3] = -vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[0] = -vx_set - vy_set + (-CHASSIS_WZ_SET_SCALE - CHASSIS_WZ_SET_YOU - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[1] = vx_set - vy_set + (-CHASSIS_WZ_SET_SCALE + CHASSIS_WZ_SET_YOU - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[2] = vx_set + vy_set + (CHASSIS_WZ_SET_SCALE + CHASSIS_WZ_SET_YOU - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+    wheel_speed[3] = -vx_set + vy_set + (CHASSIS_WZ_SET_SCALE - CHASSIS_WZ_SET_YOU - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
 }
 
 static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)

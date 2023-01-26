@@ -1,7 +1,7 @@
 freertos-m3508\freertos.o: ../Core/Src/freertos.c
 freertos-m3508\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-freertos-m3508\freertos.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
-freertos-m3508\freertos.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+freertos-m3508\freertos.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
+freertos-m3508\freertos.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
 freertos-m3508\freertos.o: ../Core/Inc/FreeRTOSConfig.h
 freertos-m3508\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 freertos-m3508\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

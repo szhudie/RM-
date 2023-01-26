@@ -29,7 +29,7 @@ void shoot_task(void const * argument)
 		
 	Shoot_move(&SHOOT_TASK);
 
-	Shoot_GiveCUR(&SHOOT_TASK);
+//	Shoot_GiveCUR(&SHOOT_TASK);
 		
   osDelay(1);
   }

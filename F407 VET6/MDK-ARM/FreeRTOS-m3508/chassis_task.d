@@ -8,7 +8,7 @@ freertos-m3508\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Include/core_cm4.h
-freertos-m3508\chassis_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+freertos-m3508\chassis_task.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Include/cmsis_version.h
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -16,7 +16,7 @@ freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 freertos-m3508\chassis_task.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 freertos-m3508\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 freertos-m3508\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-freertos-m3508\chassis_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+freertos-m3508\chassis_task.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
 freertos-m3508\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 freertos-m3508\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 freertos-m3508\chassis_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
@@ -49,6 +49,6 @@ freertos-m3508\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/includ
 freertos-m3508\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
 freertos-m3508\chassis_task.o: ..\APP\chassis\chassis_behaviour.h
 freertos-m3508\chassis_task.o: ../dsp/Include/arm_math.h
-freertos-m3508\chassis_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
-freertos-m3508\chassis_task.o: D:\MDK5\ARM\ARMCC\Bin\..\include\math.h
+freertos-m3508\chassis_task.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\string.h
+freertos-m3508\chassis_task.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\math.h
 freertos-m3508\chassis_task.o: ../user_lib/user_lib.h

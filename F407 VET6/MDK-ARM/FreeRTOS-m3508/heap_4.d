@@ -1,8 +1,8 @@
 freertos-m3508\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-freertos-m3508\heap_4.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+freertos-m3508\heap_4.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdlib.h
 freertos-m3508\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-freertos-m3508\heap_4.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
-freertos-m3508\heap_4.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+freertos-m3508\heap_4.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
+freertos-m3508\heap_4.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
 freertos-m3508\heap_4.o: ../Core/Inc/FreeRTOSConfig.h
 freertos-m3508\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 freertos-m3508\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
