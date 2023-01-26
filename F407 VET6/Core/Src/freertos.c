@@ -185,37 +185,3 @@ __weak void Detect_Task(void *argument)
   }
   /* USER CODE END Detect_Task */
 }
-
-/* Private application code --------------------------------------------------*/
-/* USER CODE BEGIN Application */
-// void StartTask02(void *argument)
-//	{
-//  for(;;)
-//  {
-//    //if(s0_flag==1){
-////	for (i = 0; i < 4; i++)//四个电机循环计算PID
-////{
-////		YPID_calc(&chassis_angle_pid[i], motor_chassis[i].ecd_out, &RC_CtrlData,1);//----pid计算
-////}
-
-////			for (i = 0; i < 4; i++)//四个电机循环计算PID
-////{
-////		PID_calc(&chassis_speed_pid[i], motor_chassis[i].speed_rpm,chassis_angle_pid[i].out);//----pid计算
-////}
-//////		CAN_cmd_chassis(chassis_speed_pid[0].out, //调用发送报文函数，将pid计算出来的值发送给电调
-//////		                chassis_speed_pid[1].out, 
-//////		                chassis_speed_pid[2].out, 
-//////                    chassis_speed_pid[3].out);
-////}
-////else if(s0_flag==3){
-
-////YPID_calc(&chassis_speed_pid[i], motor_chassis[i].speed_rpm,&RC_CtrlData,0);//----pid计算
-
-////}
-//osDelay(1);
-//  }
-
-
-//}
-/* USER CODE END Application */
-

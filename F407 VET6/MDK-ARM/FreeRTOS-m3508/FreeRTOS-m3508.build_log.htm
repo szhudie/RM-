@@ -28,25 +28,21 @@ Project File Date:  01/19/2023
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'F:\mdk5\Core\ARM\ARMCC\Bin'
 Build target 'FreeRTOS-m3508'
 compiling chassis_task.c...
-..\APP\chassis\chassis_task.c(141): warning:  #177-D: variable "chassis_x_order_filter"  was declared but never referenced
-      const static fp32 chassis_x_order_filter[1] = {CHASSIS_ACCEL_X_NUM};
-..\APP\chassis\chassis_task.c(142): warning:  #177-D: variable "chassis_y_order_filter"  was declared but never referenced
-      const static fp32 chassis_y_order_filter[1] = {CHASSIS_ACCEL_Y_NUM};
-..\APP\chassis\chassis_task.c(297): warning:  #177-D: variable "swing_angle"  was declared but never referenced
+..\APP\chassis\chassis_task.c(262): warning:  #177-D: variable "swing_angle"  was declared but never referenced
   					static int swing_angle=45;
-..\APP\chassis\chassis_task.c(298): warning:  #177-D: variable "sin_angle"  was declared but never referenced
+..\APP\chassis\chassis_task.c(263): warning:  #177-D: variable "sin_angle"  was declared but never referenced
   					static int sin_angle=25;
-..\APP\chassis\chassis_task.c(346): warning:  #177-D: variable "max_vector"  was declared but never referenced
+..\APP\chassis\chassis_task.c(311): warning:  #177-D: variable "max_vector"  was declared but never referenced
       fp32 max_vector = 0.0f, vector_rate = 0.0f;
-..\APP\chassis\chassis_task.c(346): warning:  #177-D: variable "vector_rate"  was declared but never referenced
+..\APP\chassis\chassis_task.c(311): warning:  #177-D: variable "vector_rate"  was declared but never referenced
       fp32 max_vector = 0.0f, vector_rate = 0.0f;
-..\APP\chassis\chassis_task.c(347): warning:  #177-D: variable "temp"  was declared but never referenced
+..\APP\chassis\chassis_task.c(312): warning:  #177-D: variable "temp"  was declared but never referenced
       fp32 temp = 0.0f;
-..\APP\chassis\chassis_task.c: 7 warnings, 0 errors
+..\APP\chassis\chassis_task.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=27924 RO-data=2680 RW-data=292 ZI-data=21556  
+Program Size: Code=27524 RO-data=2648 RW-data=272 ZI-data=21472  
 FromELF: creating hex file...
-"FreeRTOS-m3508\FreeRTOS-m3508.axf" - 0 Error(s), 7 Warning(s).
+"FreeRTOS-m3508\FreeRTOS-m3508.axf" - 0 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
 

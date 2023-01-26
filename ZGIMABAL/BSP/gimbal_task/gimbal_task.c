@@ -98,7 +98,8 @@ void ECD_Format(int *ecd){
 }
 
 //pid数据清理
-static void Gimbal_PID_clear(Gimbal_PID_t *gimbal_pid_clear)
+static
+	void Gimbal_PID_clear(Gimbal_PID_t *gimbal_pid_clear)
 {
     if (gimbal_pid_clear == NULL)
     {

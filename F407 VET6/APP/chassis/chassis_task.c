@@ -15,7 +15,7 @@
   ****************************(C) COPYRIGHT 2016 DJI****************************
   */
 #include "chassis_task.h"
-
+#include "detect_tesk.h"
 
 
 #include "FreeRTOSConfig.h"
@@ -39,11 +39,8 @@
         }                                                \
     }
 
-//底盘运动斜坡函数
-ramp_t chassis_fb_ramp,chassis_lr_ramp;
 //底盘运动数据
 chassis_move_t chassis_move;
-
 //底盘初始化，主要是pid初始化
 static void chassis_init(chassis_move_t *chassis_move_init);
 //底盘状态机选择，通过遥控器的开关
@@ -57,9 +54,6 @@ static void chassis_set_contorl(chassis_move_t *chassis_move_control);
 //底盘PID计算以及运动分解
 static void chassis_control_loop(chassis_move_t *chassis_move_control_loop);
 
-#if INCLUDE_uxTaskGetStackHighWaterMark
-uint32_t chassis_high_water;
-#endif
  fp32 motor_speed_pid[3] = {700,0.3,0};
  fp32 motor_angle_pid[3] = {1.9,0,0};
  fp32 M3505_MOTOR_SPEED_PID_MAX_OUT=10000.0f;
@@ -79,35 +73,6 @@ void chassis_task(void *pvParameters)
     //判断底盘电机是否都在线
     while (1)
     {
-			chassis_move.motor_speed_pid[0].Kp = motor_speed_pid[0];
-			chassis_move.motor_speed_pid[0].Ki = motor_speed_pid[1];
-			chassis_move.motor_speed_pid[0].Kd = motor_speed_pid[2];
-			chassis_move.motor_speed_pid[0].max_out=M3505_MOTOR_SPEED_PID_MAX_OUT;
-			chassis_move.motor_speed_pid[0].max_iout=M3505_MOTOR_SPEED_PID_MAX_IOUT;
-			
-			chassis_move.motor_speed_pid[1].Kp = motor_speed_pid[0];
-			chassis_move.motor_speed_pid[1].Ki = motor_speed_pid[1];
-			chassis_move.motor_speed_pid[1].Kd = motor_speed_pid[2];
-			chassis_move.motor_speed_pid[1].max_out=M3505_MOTOR_SPEED_PID_MAX_OUT;
-			chassis_move.motor_speed_pid[1].max_iout=M3505_MOTOR_SPEED_PID_MAX_IOUT;
-			
-			chassis_move.motor_speed_pid[2].Kp = motor_speed_pid[0];
-			chassis_move.motor_speed_pid[2].Ki = motor_speed_pid[1];
-			chassis_move.motor_speed_pid[2].Kd = motor_speed_pid[2];
-			chassis_move.motor_speed_pid[2].max_out=M3505_MOTOR_SPEED_PID_MAX_OUT;
-			chassis_move.motor_speed_pid[2].max_iout=M3505_MOTOR_SPEED_PID_MAX_IOUT;
-			
-			chassis_move.motor_speed_pid[3].Kp = motor_speed_pid[0];
-			chassis_move.motor_speed_pid[3].Ki = motor_speed_pid[1];
-			chassis_move.motor_speed_pid[3].Kd = motor_speed_pid[2];
-			chassis_move.motor_speed_pid[3].max_out=M3505_MOTOR_SPEED_PID_MAX_OUT;
-			chassis_move.motor_speed_pid[3].max_iout=M3505_MOTOR_SPEED_PID_MAX_IOUT;
-			
-			chassis_move.chassis_angle_pid.Kp = motor_angle_pid[0];
- 			chassis_move.chassis_angle_pid.Ki = motor_angle_pid[1];
-			chassis_move.chassis_angle_pid.Kd = motor_angle_pid[2];
-			chassis_move.chassis_angle_pid.max_out = CHASSIS_FOLLOW_GIMBAL_PID_MAX_OUT;
-			chassis_move.chassis_angle_pid.max_iout = CHASSIS_FOLLOW_GIMBAL_PID_MAX_IOUT;
         //遥控器设置状态
         chassis_set_mode(&chassis_move);
         //遥控器状态切换数据保存
@@ -118,9 +83,16 @@ void chassis_task(void *pvParameters)
         chassis_set_contorl(&chassis_move);
         //底盘控制PID计算
         chassis_control_loop(&chassis_move);
-			
+				//接收机，陀螺仪断线,YAW轴断线，云台不动
+		if(Detect_Judeg(5)||Detect_Judeg(0)||Detect_Judeg(1)||Detect_Judeg(2)||Detect_Judeg(3)||Detect_Judeg(4))
+		{
+			CAN_cmd_chassis(0,0,0,0);
+		}
+		else
+		{
 			CAN_cmd_chassis(chassis_move.motor_chassis[0].give_current, chassis_move.motor_chassis[1].give_current,
                                 chassis_move.motor_chassis[2].give_current, chassis_move.motor_chassis[3].give_current);
+		}
         //系统延时
         vTaskDelay(CHASSIS_CONTROL_TIME_MS);
 
@@ -133,13 +105,6 @@ static void chassis_init(chassis_move_t *chassis_move_init)
     {
         return;
     }
-
-    //底盘速度环pid值
-    const static fp32 motor_speed_pid[3] = {M3505_MOTOR_SPEED_PID_KP, M3505_MOTOR_SPEED_PID_KI, M3505_MOTOR_SPEED_PID_KD};
-    //底盘旋转环pid值
-    const static fp32 chassis_yaw_pid[3] = {CHASSIS_FOLLOW_GIMBAL_PID_KP, CHASSIS_FOLLOW_GIMBAL_PID_KI, CHASSIS_FOLLOW_GIMBAL_PID_KD};
-    const static fp32 chassis_x_order_filter[1] = {CHASSIS_ACCEL_X_NUM};
-    const static fp32 chassis_y_order_filter[1] = {CHASSIS_ACCEL_Y_NUM};
     uint8_t i;
 
     //底盘开机状态为停止
@@ -156,7 +121,7 @@ static void chassis_init(chassis_move_t *chassis_move_init)
         PID_init(&chassis_move_init->motor_speed_pid[i], PID_POSITION, motor_speed_pid, M3505_MOTOR_SPEED_PID_MAX_OUT, M3505_MOTOR_SPEED_PID_MAX_IOUT);
     }
     //初始化旋转PID
-    PID_init(&chassis_move_init->chassis_angle_pid, PID_POSITION, chassis_yaw_pid, CHASSIS_FOLLOW_GIMBAL_PID_MAX_OUT, CHASSIS_FOLLOW_GIMBAL_PID_MAX_IOUT);
+    PID_init(&chassis_move_init->chassis_angle_pid, PID_POSITION, motor_angle_pid, CHASSIS_FOLLOW_GIMBAL_PID_MAX_OUT, CHASSIS_FOLLOW_GIMBAL_PID_MAX_IOUT);
     //用一阶滤波代替斜波函数生成
     //最大 最小速度
     chassis_move_init->vx_max_speed = NORMAL_MAX_CHASSIS_SPEED_X;

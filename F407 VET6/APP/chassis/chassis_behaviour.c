@@ -104,13 +104,14 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
     }
     else if (switch_is_down(chassis_move_mode->chassis_RC->rc.s[MODE_CHANNEL]))
     {
-        chassis_behaviour_mode = CHASSIS_ZERO_FORCE;//当行为是底盘不移动
+        chassis_behaviour_mode = CHASSIS_ZERO_FORCE;//当行为是无力
     }
     else if (switch_is_up(chassis_move_mode->chassis_RC->rc.s[MODE_CHANNEL]))
     {
         chassis_behaviour_mode = CHASSIS_INFANTRY_FOLLOW_GIMBAL_YAW; //当行为是正常步兵跟随云台，则设置底盘状态机为 底盘跟随云台角度 状态机
     }
 		
+		// 判断是否旋转
 		if(switch_is_mid(chassis_move_mode->chassis_RC->rc.s[1]))
 		{
 		 chassis_move_mode->swing_flag = 1;
@@ -120,17 +121,6 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
 		 chassis_move_mode->swing_flag = 0;
 		}
 		
-				//接收机，陀螺仪断线,YAW轴断线，云台不动
-		if(Detect_Judeg(5))
-		{
-			chassis_behaviour_mode = CHASSIS_ZERO_FORCE;
-		}
-
-    //云台进入某些状态的时候，底盘保持不动
-//    if (gimbal_cmd_to_chassis_stop())
-//    {
-//        chassis_behaviour_mode = CHASSIS_NO_MOVE;
-//    }
 
     //根据行为状态机选择底盘状态机
     if (chassis_behaviour_mode == CHASSIS_ZERO_FORCE)

@@ -38,6 +38,7 @@ freertos-m3508\chassis_task.o: ../BSP/pid/struct_typedef.h
 freertos-m3508\chassis_task.o: ../BSP/BSP_DMA/bsp_dma.h
 freertos-m3508\chassis_task.o: ../BSP/bsp_can.c/bsp_can.h
 freertos-m3508\chassis_task.o: ../BSP/pid/pid.h
+freertos-m3508\chassis_task.o: ../detect/detect_tesk.h
 freertos-m3508\chassis_task.o: ../Core/Inc/FreeRTOSConfig.h
 freertos-m3508\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 freertos-m3508\chassis_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

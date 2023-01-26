@@ -29,7 +29,7 @@ void shoot_task(void const * argument)
 		
 	Shoot_move(&SHOOT_TASK);
 
-//	Shoot_GiveCUR(&SHOOT_TASK);
+	Shoot_GiveCUR(&SHOOT_TASK);
 		
   osDelay(1);
   }
@@ -42,19 +42,25 @@ Shoot_DATA *Get_Shoot_DATA()
 /*****************************************************************************************/
 void Shoot_Mode_Set(Shoot_DATA *SHOOT_MODE_SET)
 { 
-if(SHOOT_MODE_SET->Get_Rc->rc.s[MODE_RC_CHANNEL] == RC_SWITCH_UP)
-{
+	SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode = SHOOT_MODE_SET->Shoot_Mode.Shoot_mode;
+ if(SHOOT_MODE_SET->Get_Rc->rc.s[MODE_RC_CHANNEL] == RC_SWITCH_UP)
+  {
 		SHOOT_MODE_SET->Shoot_Mode.Use_Mode = Handle;
-}
-if(SHOOT_MODE_SET->Get_Rc->rc.s[MODE_RC_CHANNEL] == RC_SWITCH_MID)
-{
+  }
+ if(SHOOT_MODE_SET->Get_Rc->rc.s[MODE_RC_CHANNEL] == RC_SWITCH_MID)
+  {
 		SHOOT_MODE_SET->Shoot_Mode.Use_Mode = KeyBord;
-}
+  }
 
-  if(SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_MID)
- {
-	SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_ONECE;
- }
+  if(SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_UP)
+  {
+	 SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_ONECE;
+  }
+	
+	  if(SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_MID||SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_DOWN)
+  {
+	 SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_WEAK;
+  }
  
 //还原拨盘位置，防止无力拨动拨盘后射击模式疯转
 	if(SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode == SHOOT_WEAK && (SHOOT_MODE_SET->Shoot_Mode.Shoot_mode == SHOOT_ONECE || SHOOT_MODE_SET->Shoot_Mode.Shoot_mode == SHOOT_KEEP
@@ -63,47 +69,6 @@ if(SHOOT_MODE_SET->Get_Rc->rc.s[MODE_RC_CHANNEL] == RC_SWITCH_MID)
 	SHOOT_MODE_SET->Shoot_PID.Shoot_ANGLE_PID.ref = SHOOT_MODE_SET->TRI_MOTOR->total_angle;
   }
  
-//射击模式单发
-  if(SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode == SHOOT_ONECE &&SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_UP&&SHOOT_MODE_SET->Shoot_Mode.Shoot_Protect!=STOPPAGE)
-  {
-//	SHOOT_MODE_SET->Shoot_PID.Shoot_ANGLE_PID.ref += ONECE_TRI_ANGLE;
-	SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode = SHOOT_ONECE;
-  }
-	
-	if(SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_UP)
- {
-	SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_KEEP;
-	 SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode = SHOOT_KEEP;
- }
- 
-	if(SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_MID && SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode == SHOOT_KEEP)
- {
-	SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_KEEP;
-	SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode = SHOOT_ONECE;
- }
- 
- 	if(SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_MID && SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode == SHOOT_WEAK)
- {
-	SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode = SHOOT_ONECE;
- }
- 
-//键盘模式自瞄
-//if(SHOOT_MODE_SET->Shoot_Mode.Use_Mode == KEYBORAD)
-//{ 
-//	if(SHOOT_MODE_SET->Get_Rc->Mouse.press_r == 1)
-//	{
-//		SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_AIM;
-//	}
-//}
-
-//射击无力
-  if((SHOOT_MODE_SET->Get_Rc->rc.s[SHOOT_RC_CHANNEL] == RC_SWITCH_DOWN && SHOOT_MODE_SET->Shoot_Mode.Shoot_mode != SHOOT_AIM 
-	  	&&SHOOT_MODE_SET->Shoot_Mode.Shoot_mode != SHOOT_BUFF)
-		  ||SHOOT_MODE_SET->Get_Rc->rc.s[MODE_RC_CHANNEL] == RC_SWITCH_DOWN)
-{
-	SHOOT_MODE_SET->Shoot_Mode.Shoot_mode = SHOOT_WEAK;
-	SHOOT_MODE_SET->Shoot_Mode.Last_Shoot_mode = SHOOT_WEAK;
-}
 }
 
 
@@ -114,9 +79,6 @@ void Shoot_Init(Shoot_DATA *SHOOT_INIT)
 	SHOOT_INIT->TRI_MOTOR = Get_Pluck_Motor_Data_Point();      //读取拨盘数据
 	SHOOT_INIT->FRI_MOTOR1 = Get_Fri1_Motor_Data_Point();
 	SHOOT_INIT->FRI_MOTOR2 = Get_Fri2_Motor_Data_Point();	     //读取摩擦轮数据
-//	SHOOT_INIT->CAN2_RC_DATA = Get_CAN2_Referee_Data_Point();  //读取CAN2数据
-//	SHOOT_INIT->gk_DATA = GET_GK_DATA();                       //读取工控数据
-//	SHOOT_INIT->Get_Gimbal_Data = GET_GIMBAL_DATA();           //读取云台数据
 	static fp32 Shoot_SPEED_PID[3] = {20,0,0};
 	static fp32 Shoot_ANGLE_PID[3] = {12,0,0};
 	static fp32 Fri_SPEED_PID1[3] = {990,0.001,0};
@@ -188,22 +150,6 @@ TIM1 -> CCR3 = 3200;//3200
 /***************************摩擦轮*************************************/
 //限制射速
 MAX_Shoot_Speed_Limit =30;
-//if(SHOOT_PID->CAN2_RC_DATA->shooter_id1_17mm_speed_limit == 15)
-//{
-//	MAX_Shoot_Speed_Limit = 22;
-//}
-//else if(SHOOT_PID->CAN2_RC_DATA->shooter_id1_17mm_speed_limit == 18)
-//{
-//	MAX_Shoot_Speed_Limit = 25;
-//}
-//else if(SHOOT_PID->CAN2_RC_DATA->shooter_id1_17mm_speed_limit == 30)
-//{
-//	MAX_Shoot_Speed_Limit = 43;
-//}
-//else
-//{
-//	MAX_Shoot_Speed_Limit = 30;
-//}
 
 
 /****************************拨盘**************************************/
@@ -252,89 +198,10 @@ if(__fabs(SHOOT_PID->Get_Rc->rc.ch[4]) < BULLET_DEADLINE1)
 //键盘
 
 //遥控器
-//if(SHOOT_PID->Shoot_Mode.Use_Mode == Handle)
-//{
-//   if(SHOOT_PID->Shoot_Mode.Shoot_Time == Tri_ON && SHOOT_PID->Shoot_Mode.Shoot_Protect!=STOPPAGE)  //计算拨盘拨一次的时间
-//	{
-// first_time = xTaskGetTickCount();
-// second_time = first_time;
-// SHOOT_PID->Shoot_Mode.Shoot_Time = Tri_OFF;
-//	}
-//   if(SHOOT_PID->Shoot_Mode.Shoot_Time == Tri_OFF)
-//{
-//	first_time = xTaskGetTickCount();
-//	if(SHOOT_PID->Shoot_Mode.Shoot_mode == SHOOT_KEEP )
-// {
-//	 keep_time_OFF = xTaskGetTickCount();  //在上拨杆持续时间
-//	 if(keep_time_OFF - keep_time_ON > KEEP_SHOOT_TIME1) SHOOT_PID->Shoot_Mode.KEEP_MODE = KEEP_YES;
-// }
-//   if(SHOOT_PID->Shoot_Mode.KEEP_MODE == KEEP_YES)
-// {
-////	 if(first_time - second_time > KEEP_TRI_TIME1 && 
-////		 (SHOOT_PID->CAN2_RC_DATA->shooter_id1_17mm_cooling_limit - SHOOT_PID->CAN2_RC_DATA->shooter_id1_17mm_cooling_heat > 10)
-////	    && SHOOT_PID->CAN2_RC_DATA->Refree_ON == 1 && SHOOT_PID->Shoot_Mode.Shoot_Protect!=STOPPAGE) //有裁判系统
-////	 {
-////		SHOOT_PID->Shoot_Mode.Shoot_Time = Tri_ON;
-////	 	SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.ref += ONECE_TRI_ANGLE;
-////	 }
-////	 if(first_time - second_time > KEEP_TRI_TIME1 && SHOOT_PID->Shoot_Mode.Shoot_Protect!=STOPPAGE) //无裁判系统
-////	 {
-////		SHOOT_PID->Shoot_Mode.Shoot_Time = Tri_ON;
-////	 	SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.ref += ONECE_TRI_ANGLE;		 
-////	 }
-// }
-//}
-// if(SHOOT_PID->Shoot_Mode.Shoot_mode == SHOOT_ONECE)
-// {
-//	SHOOT_PID->Shoot_Mode.KEEP_MODE = KEEP_NO;
-//	keep_time_ON = xTaskGetTickCount();
-//	SHOOT_PID->Shoot_Mode.Shoot_Time = Tri_ON;
-// }
-//}
-//打符or自瞄自动开火
-//if(SHOOT_PID->gk_DATA->Fire_Siwtch >= 100 && SHOOT_PID->Get_Gimbal_Data->Use_Flag.gimbal_state == Gimbal_Buff)
-//{
-//	SHOOT_PID->Shoot_Mode.KEEP_MODE = KEEP_YES;
-//}
-//else if(SHOOT_PID->gk_DATA->Fire_Siwtch <= 100 && SHOOT_PID->Get_Gimbal_Data->Use_Flag.gimbal_state == Gimbal_Buff)
-//{
-//	SHOOT_PID->Shoot_Mode.KEEP_MODE = KEEP_NO;
-//}
  /**********************************PID计算**************************************/
 
 	Angle_Pid_Cala(&SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID,SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.fdb,SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.ref);
-//  if(SHOOT_PID->Shoot_Mode.Shoot_Protect == NOMAL)
-// {
-//	stoppage_Time = xTaskGetTickCount();
-//	reverse_Time = xTaskGetTickCount();
-// }
-//堵转保护第一重
-//  if(SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.err >= 1000)
-//	{
-//	if((xTaskGetTickCount() - stoppage_Time) > 500)
-//		{
-//		SHOOT_PID->Shoot_Mode.Shoot_Protect = STOPPAGE;
-//		}
-//	}	
-//	else if(SHOOT_PID->Shoot_Mode.Shoot_Protect == NOMAL)
-//		{
-//	   stoppage_Time = xTaskGetTickCount();
-//	   reverse_Time = xTaskGetTickCount();
-//	  }
-////堵转保护第二重
-//  if(SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.err > ONECE_TRI_ANGLE*3)
-//	{
-//	  SHOOT_PID->Shoot_Mode.Shoot_Protect = STOPPAGE;
-//	}
-////堵转保护措施
-//	if(SHOOT_PID->Shoot_Mode.Shoot_Protect == STOPPAGE)
-//	{
-////		SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.ref -=ONECE_TRI_ANGLE*0.5f;
-////		if(xTaskGetTickCount() - reverse_Time)
-////		{
-////		 SHOOT_PID->Shoot_Mode.Shoot_Protect = NOMAL;
-////		}
-//	}
+
 	SHOOT_PID->Shoot_PID.Shoot_SPEED_PID.ref = SHOOT_PID->Shoot_PID.Shoot_ANGLE_PID.out;
 	Speed_Pid_Calc(&SHOOT_PID->Shoot_PID.Shoot_SPEED_PID);
 
@@ -374,29 +241,8 @@ void Shoot_GiveCUR(Shoot_DATA *SHOOT_CUR)
  float Shoot_Kaluli_limit(Shoot_DATA *SHOOT_heat_limt)     
  {
 	
-	static float Error_Kaluli;
 	static float E_Shoot_Rate;
 	 
-//	Error_Kaluli= SHOOT_heat_limt->CAN2_RC_DATA->shooter_id1_17mm_cooling_limit - (SHOOT_heat_limt->CAN2_RC_DATA->shooter_id1_17mm_cooling_heat) ;    //热量上限-当前热量==剩余热量
-//	
-//	 
-//   if(Error_Kaluli <_17mm_Heat_of_Projectile*1)    // 剩余热量小于一颗弹丸的热量
-//	 {
-//		E_Shoot_Rate = 0.0001;          //发射频率为：0 
-//	 }
-//	 else if(Error_Kaluli>=_17mm_Heat_of_Projectile*1&&Error_Kaluli<=_17mm_Heat_of_Projectile*2)  //剩余热量刚好等于2颗弹丸的热量
-//	 {
-//		E_Shoot_Rate = SHOOT_heat_limt->CAN2_RC_DATA->shooter_id1_17mm_cooling_rate /_17mm_Heat_of_Projectile;    //发射射频：枪口热量保持稳定
-//	 }
-//	 else if (Error_Kaluli <=_17mm_Heat_of_Projectile * 10&&Error_Kaluli >_17mm_Heat_of_Projectile*2)  //剩余热量小于猛烈发射模式的阈值
-//	 {
-//		E_Shoot_Rate= (Error_Kaluli/(_17mm_Heat_of_Projectile  * 10)) * (15-(SHOOT_heat_limt->CAN2_RC_DATA->shooter_id1_17mm_cooling_rate /_17mm_Heat_of_Projectile))
-//		               + SHOOT_heat_limt->CAN2_RC_DATA->shooter_id1_17mm_cooling_rate /_17mm_Heat_of_Projectile;  //射频随热量线性下降
-//	 }
-//	 else if (Error_Kaluli>_17mm_Heat_of_Projectile * 10&&Error_Kaluli<=SHOOT_heat_limt->CAN2_RC_DATA->shooter_id1_17mm_cooling_limit  )  //剩余热量大于猛烈发射模式的阈值
-//	 {                           
-//		 E_Shoot_Rate=15;	 //发射射频为猛烈发射模式的射频
-//	 }
 	 E_Shoot_Rate = 15;
 	 return E_Shoot_Rate;           //返回射频
  }

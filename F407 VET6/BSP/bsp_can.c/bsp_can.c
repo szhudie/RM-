@@ -6,12 +6,13 @@ uint8_t chassis_can_send_data[8]={0};//底盘数据
 uint8_t GIMBAL_can_send_data[8]={0};//云台数据
 CAN_TxHeaderTypeDef chassis_tx_message;//底盘can结构体
 CAN_TxHeaderTypeDef GIMBAL_TxMessage;//云台can结构体
-motor_measure_t motor_yaw, motor_pit, motor_trigger, motor_chassis[4];
-int motor_flag = 1;
+motor_measure_t motor_yaw, motor_pit, motor_chassis[4];
+//int motor_flag = 1; 后面可以删掉
 uint8_t sbus_buf[18];//遥控器数据
 //统一处理can接收函数
 static void CAN_hook(CAN_RxHeaderTypeDef *rx_message,uint8_t rx_data[8]);
 void can2_filter_init(void);
+
 void Can_init(void){
 
 can_filter_init();//----过滤器初始化
@@ -108,17 +109,17 @@ void CAN_cmd_gimbal(int16_t yaw, int16_t pitch, int16_t shoot, int16_t rev)
 */
 void get_motor_measure(motor_measure_t *motor_chassis, uint8_t data[8])                                    \
     {  
-			if(motor_flag==1){
-		motor_flag=0;
-			motor_chassis->ecd_flag = ((int16_t)((data)[0] << 8 | (data)[1]));
-		}                                                
+//			if(motor_flag==1){
+//		motor_flag=0;
+//			motor_chassis->ecd_flag = ((int16_t)((data)[0] << 8 | (data)[1]));
+//		}                    后面可以删掉                             
         motor_chassis->last_ecd=motor_chassis->ecd;        //PID当前值
         motor_chassis->ecd = ((int16_t)((data)[0] << 8 | (data)[1]));            
         motor_chassis->speed_rpm = (int16_t)((data)[2] << 8 | (data)[3]);      
         motor_chassis->given_current = (int16_t)((data)[4] << 8 | (data)[5]);  
         motor_chassis->temperate = (data)[6]; 
 
-
+// 计圈
 motor_chassis-> angle_error =  motor_chassis->ecd	- motor_chassis->last_ecd;
 			if( motor_chassis->angle_error<-8000){
 			(motor_chassis->quan)++;
@@ -158,27 +159,6 @@ static void CAN_hook(CAN_RxHeaderTypeDef *rx_message,uint8_t rx_data[8])
 
     switch (rx_message->StdId)
     {
-    case CAN_YAW_MOTOR_ID:
-    {
-        //处理电机数据宏函数
-        get_motor_measure(&motor_yaw, rx_data);
-        DetectHook(0);
-        break;
-    }
-    case CAN_PIT_MOTOR_ID:
-    {
-        //处理电机数据宏函数
-        get_motor_measure(&motor_pit, rx_data);
-//        DetectHook(1);
-        break;
-    }
-    case CAN_TRIGGER_MOTOR_ID:
-    {
-        //处理电机数据宏函数
-        get_motor_measure(&motor_trigger, rx_data);
-//        DetectHook(TriggerMotorTOE);//记录时间
-        break;
-    }
     case CAN_3508_M1_ID:
     case CAN_3508_M2_ID:
     case CAN_3508_M3_ID:
@@ -233,11 +213,6 @@ const motor_measure_t *get_Yaw_Gimbal_Motor_Measure_Point(void)
 const motor_measure_t *get_Pitch_Gimbal_Motor_Measure_Point(void)
 {
     return &motor_pit;
-}
-//返回trigger电机变量地址，通过指针方式获取原始数据
-const motor_measure_t *get_Trigger_Motor_Measure_Point(void)
-{
-    return &motor_trigger;
 }
 //返回底盘电机变量地址，通过指针方式获取原始数据
 const motor_measure_t *get_Chassis_Motor_Measure_Point(uint8_t i)

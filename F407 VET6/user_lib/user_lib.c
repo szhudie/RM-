@@ -3,7 +3,7 @@
 #include "stm32f4xx_hal.h"
 #define int_abs(x) ((x) > 0 ? (x) : (-x))
 #define Ang_2PI 2*PI
-extern ramp_t chassis_fb_ramp;
+ramp_t chassis_fb_ramp;
 //快速开方
 fp32 invSqrt(fp32 num)
 {

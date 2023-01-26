@@ -6,15 +6,9 @@
 #include "detect_tesk.h"
 #define RECEIVELEN 128
 uint8_t rc_RxBuffer[RECEIVELEN];
- RC_Ctrl_t RC_CtrlData ;
- uint16_t	temp;
- float a=0;
- float speed_3508[4];
- int s0_flag;
+ RC_Ctrl_t RC_CtrlData ; // 遥控器数据
+ uint16_t	temp;//未传数据 用于计算收到多少数据
 
-//extern uint32_t Reset;//判断遥控是否掉线
-
-//UART_HandleTypeDef huart2;
 void RC_Init(uint8_t *rx1_buf,uint16_t dma_buf_num)
 {
 	SET_BIT(huart2.Instance->CR1, USART_CR1_IDLEIE);//开启串口空闲中断.
@@ -72,9 +66,6 @@ void Get_Remote_info(RC_Ctrl_t *rc_ctrl ,volatile const uint8_t *sbus_buf)
     rc_ctrl->rc.s[0] = ((sbus_buf[5] >> 4) & 0x0003);                  //!< Switch left
     rc_ctrl->rc.s[1] = ((sbus_buf[5] >> 4) & 0x000C) >> 2;	//!< Switch right
 	
-	if(rc_ctrl->rc.s[0]==1)s0_flag=1;
-	else if(rc_ctrl->rc.s[0]==3)s0_flag=3;
-	else if(rc_ctrl->rc.s[0]==2)s0_flag=2;
     rc_ctrl->mouse.x = sbus_buf[6] | (sbus_buf[7] << 8);                    //!< Mouse X axis
     rc_ctrl->mouse.y = sbus_buf[8] | (sbus_buf[9] << 8);                    //!< Mouse Y axis
     rc_ctrl->mouse.z = sbus_buf[10] | (sbus_buf[11] << 8);                  //!< Mouse Z axis

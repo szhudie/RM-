@@ -10,11 +10,6 @@
 pid_type_def chassis_speed_pid[4];//定义底盘结构体
 pid_type_def chassis_angle_pid[4];//定义底盘结构体
 const motor_measure_t *motor_data;	//声明电机结构体指针(用于存储can读数)
-const pid_type_def *pid_speed;
-const pid_type_def *pid_angld;
-extern int s0_flag;
-int32_t xset;
-
 
 void LimitMax(pid_type_def *input, fp32 mode)   \
     {    
@@ -118,45 +113,6 @@ fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set)
 }
 
 
-//fp32 YPID_calc(pid_type_def *pid, fp32 ref, RC_Ctrl_t *RC_CtrlData,fp32 set,int mode)
-//{
-//    if (pid == NULL)
-//    {
-//        return 0.0f;
-//    }
-//		
-//		if(mode==1){
-//   xset = RC_CtrlData->sex.yes;
-
-//		}else if(mode==2){
-//		
-//		xset = RC_CtrlData->rc.ch[0];
-
-//		}else if(mode == 0){
-//			
-//		xset = set;
-//		
-//		}
-//    pid->error[2] = pid->error[1];
-//    pid->error[1] = pid->error[0];
-//    pid->set = xset;
-//    pid->fdb = ref;
-//    pid->error[0] = xset - ref;
-
-//        pid->Pout = pid->Kp * pid->error[0];
-//        pid->Iout += pid->Ki * pid->error[0];
-//        pid->Dbuf[2] = pid->Dbuf[1];
-//        pid->Dbuf[1] = pid->Dbuf[0];
-//        pid->Dbuf[0] = (pid->error[0] - pid->error[1]);
-//        pid->Dout = pid->Kd * pid->Dbuf[0];
-//        LimitMax(pid, 0);
-//        pid->out = pid->Pout + pid->Iout + pid->Dout;
-//        LimitMax(pid, 1);
-
-//    return pid->out;
-//}
-
-
 /**
   * @brief          pid out clear
   * @param[out]     pid: PID struct data point
@@ -179,35 +135,3 @@ void PID_clear(pid_type_def *pid)
     pid->out = pid->Pout = pid->Iout = pid->Dout = 0.0f;
     pid->fdb = pid->set = 0.0f;
 }
-
-
-
-
-
-
-// 控制电机任务
-//void StartTask02(void *argument){
-////if(s0_flag==1){
-////	for (i = 0; i < 4; i++)//四个电机循环计算PID
-////{
-////		YPID_calc(&chassis_angle_pid[i], motor_chassis[i].ecd_out, &RC_CtrlData,1);//----pid计算
-////}
-
-////			for (i = 0; i < 4; i++)//四个电机循环计算PID
-////{
-////		PID_calc(&chassis_speed_pid[i], motor_chassis[i].speed_rpm,chassis_angle_pid[i].out);//----pid计算
-////}
-//////		CAN_cmd_chassis(chassis_speed_pid[0].out, //调用发送报文函数，将pid计算出来的值发送给电调
-//////		                chassis_speed_pid[1].out, 
-//////		                chassis_speed_pid[2].out, 
-//////                    chassis_speed_pid[3].out);
-////}
-////else if(s0_flag==3){
-
-////YPID_calc(&chassis_speed_pid[i], motor_chassis[i].speed_rpm,&RC_CtrlData,0);//----pid计算
-
-////}
-//}
-
-
-
