@@ -29,15 +29,15 @@
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 0.3f
 
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 100.0f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 200.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 30.0f
 
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
 //#define YAW_GYRO_ABSOLUTE_PID_KP 1.195f
 //#define YAW_GYRO_ABSOLUTE_PID_KI 0.0f
 //#define YAW_GYRO_ABSOLUTE_PID_KD 0.1f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 100.0f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 20.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 650.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 100.0f
 
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define PITCH_ENCODE_RELATIVE_PID_KP 15.0f
@@ -136,10 +136,13 @@ typedef struct
     fp32 Pout;
     fp32 Iout;
     fp32 Dout;
+	  fp32 Dout_last;
+	  fp32 RC_DF;
 	  fp32 Dbuf[3];  //微分项 0最新 1上一次 2上上次
     fp32 error[3]; //误差项 0最新 1上一次 2上上次
 
     fp32 out;
+	  fp32 last_out;
 } Gimbal_PID_t;
 
 typedef struct
@@ -147,6 +150,8 @@ typedef struct
     const motor_measure_t *gimbal_motor_measure;
     Gimbal_PID_t gimbal_motor_absolute_angle_pid;//绝对角度PID
     Gimbal_PID_t gimbal_motor_relative_angle_pid;//相对角度PID
+	  FUZZY_PID Fuzzy_Pid;
+
     pid_type_def gimbal_motor_gyro_pid;
     gimbal_motor_mode_e gimbal_motor_mode;//电机控制模式
     gimbal_motor_mode_e last_gimbal_motor_mode;//上一个电机控制模式

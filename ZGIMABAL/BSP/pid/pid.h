@@ -87,6 +87,59 @@ typedef  struct
 
 	  fp32 offset_Tri_ecd;
 } Angle_PidTypeDef_t;
+
+////////////////////////////模糊PID结构体
+enum FUZZY_MODE
+{
+   Calculus_MODE = 0,
+   POSITION,
+	YAW_POSITION
+};
+
+
+typedef struct PID 
+{
+	 uint8_t mode;
+	
+	float Kp; // 增量式积分系数
+	float Ki; 
+	float Kd;
+	
+	float fabs_E[4],fabs_EC[4]; 
+	float es[7],ecs[7],e;
+	
+	float ec;
+	
+	float set; // 增量式积分系数
+	float fdb; 
+	float fuzzy_kp; 
+	float fuzzy_ki; 
+	float fuzzy_kd; 
+	
+	float out;
+  float Pout;
+  float Iout;
+  float Dout;
+	float Dbuf[3];
+	
+	float max_out;  //最大输出
+  float max_iout; //最大积分输出
+	
+	float erro;
+	float LastError;     //Error[-1]
+	float PrevError;    // Error[-2]
+	
+	
+	fp32 error[3];
+	
+	fp32 Fuzzy_kp_Ratio;  //减小系数
+	fp32 Fuzzy_ki_Ratio;
+	fp32 Fuzzy_kd_Ratio;
+	
+	float detkp,detkd,detki; //推理后的结果
+	
+}FUZZY_PID;
+
 extern void PID_init(pid_type_def *pid, uint8_t mode, const fp32 PID[3], fp32 max_out, fp32 max_iout);
 extern fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set);
 extern void PID_clear(pid_type_def *pid);
@@ -98,9 +151,7 @@ void Angle_Pid_Cala(Angle_PidTypeDef_t *pid,fp32 fdb , fp32 ref);
 extern void angle_PID_clear(Angle_PidTypeDef_t *pid);
 extern pid_type_def chassis_speed_pid[4];//定义底盘结构体
 extern pid_type_def chassis_angle_pid[4];//定义底盘结构体
-extern pid_type_def Yz_speed_pid; 
-extern pid_type_def Yz_angle_pid;
-extern pid_type_def Pz_speed_pid;
-extern pid_type_def Pz_angle_pid;
+void Fuzzy_Pid_Init(FUZZY_PID *pid,  const fp32 PID[3],const fp32 fabs_E[4],const fp32 fabs_EC[4], fp32 max_out, fp32 max_iout,int mode,fp32 Fuzzy_decrease_Ratio[3]);
+void Fuzzy_Pid_calc(FUZZY_PID *structpid,float set,float fdb,float D_angle) ;
 
 #endif

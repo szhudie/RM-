@@ -63,5 +63,7 @@ extern motor_measure_t motor_chassis[7];
 void Can2_init(void);
 void CAN2_motor(uint8_t rx_data[8]);
 void CAN2_get_remote(uint8_t *rx_data);
+fp32 theta_format(fp32 Ang);
+fp32 loop_fp32_constrain(fp32 Input, fp32 minValue, fp32 maxValue);
 #endif
 
