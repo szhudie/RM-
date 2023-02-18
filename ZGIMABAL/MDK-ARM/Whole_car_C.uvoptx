@@ -175,6 +175,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>\\Whole_car_C\../BSP/gimbal_task/gimbal_task.c\gimbal_control.gimbal_pitch_motor.Fuzzy_Pid.erro</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rc_ctrl</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>RC_CtrlData,0x0A</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

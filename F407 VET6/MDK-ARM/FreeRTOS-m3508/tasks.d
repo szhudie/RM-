@@ -1,9 +1,9 @@
 freertos-m3508\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-freertos-m3508\tasks.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdlib.h
-freertos-m3508\tasks.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\string.h
+freertos-m3508\tasks.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+freertos-m3508\tasks.o: D:\MDK5\ARM\ARMCC\Bin\..\include\string.h
 freertos-m3508\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-freertos-m3508\tasks.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
-freertos-m3508\tasks.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
+freertos-m3508\tasks.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+freertos-m3508\tasks.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
 freertos-m3508\tasks.o: ../Core/Inc/FreeRTOSConfig.h
 freertos-m3508\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 freertos-m3508\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

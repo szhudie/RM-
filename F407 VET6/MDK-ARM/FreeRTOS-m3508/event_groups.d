@@ -1,8 +1,8 @@
 freertos-m3508\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-freertos-m3508\event_groups.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdlib.h
+freertos-m3508\event_groups.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
 freertos-m3508\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-freertos-m3508\event_groups.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
-freertos-m3508\event_groups.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
+freertos-m3508\event_groups.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
+freertos-m3508\event_groups.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
 freertos-m3508\event_groups.o: ../Core/Inc/FreeRTOSConfig.h
 freertos-m3508\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 freertos-m3508\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

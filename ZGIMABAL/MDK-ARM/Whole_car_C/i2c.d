@@ -8,7 +8,7 @@ whole_car_c\i2c.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Include/core_cm4.h
-whole_car_c\i2c.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stdint.h
+whole_car_c\i2c.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Include/cmsis_version.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
@@ -16,7 +16,7 @@ whole_car_c\i2c.o: ../Drivers/CMSIS/Include/mpu_armv7.h
 whole_car_c\i2c.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
 whole_car_c\i2c.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 whole_car_c\i2c.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-whole_car_c\i2c.o: F:\mdk5\Core\ARM\ARMCC\Bin\..\include\stddef.h
+whole_car_c\i2c.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stddef.h
 whole_car_c\i2c.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
 whole_car_c\i2c.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 whole_car_c\i2c.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h

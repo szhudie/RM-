@@ -277,7 +277,8 @@ static void chassis_set_contorl(chassis_move_t *chassis_move_control)
 			}
 			else
 			{
-					 chassis_move_control->wz_set = -PID_calc(&chassis_move_control->chassis_angle_pid,chassis_move_control->chassis_yaw, chassis_move_control->chassis_relative_angle_set);
+					 chassis_move_control->wz_set = -PID_calc(&chassis_move_control->chassis_angle_pid,chassis_move_control->chassis_yaw, chassis_move_control->chassis_relative_angle_set); 
+//				chassis_move_control->wz_set = 0;
 			}
         //ËÙ¶ÈÏÞ·ù
         chassis_move_control->vx_set = fp32_constrain(chassis_move_control->vx_set, chassis_move_control->vx_min_speed, chassis_move_control->vx_max_speed);

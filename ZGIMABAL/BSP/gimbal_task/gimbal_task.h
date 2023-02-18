@@ -108,10 +108,20 @@
 
 typedef enum
 {
-    GIMBAL_MOTOR_RAW = 0, //电机原始值控制
+//    GIMBAL_MOTOR_RAW = 0, //电机原始值控制
+	  GIMBAL_ZERO_FORCE,    //电机无力模式
+	  GIMBAL_INIT,
     GIMBAL_MOTOR_GYRO,    //电机陀螺仪角度控制
-    GIMBAL_MOTOR_ENCONDE, //电机编码值角度控制
+//    GIMBAL_MOTOR_ENCONDE, //电机编码值角度控制
 } gimbal_motor_mode_e;
+
+typedef enum //模式标志位
+{
+	No_control,
+	KEYBORAD,
+	HANDLE,
+	
+}MOED_Flag;
 
 typedef struct
 {
@@ -195,15 +205,7 @@ typedef struct
     Gimbal_Cali_t gimbal_cali;
 } Gimbal_Control_t;
 extern Gimbal_Control_t gimbal_control;
-typedef enum
-{
-  GIMBAL_ZERO_FORCE = 0, //云台无力
-  GIMBAL_INIT,           //云台初始化
-  GIMBAL_CALI,           //云台校准
-  GIMBAL_ABSOLUTE_ANGLE, //云台陀螺仪绝对角度控制
-  GIMBAL_RELATIVE_ANGLE, //云台电机编码值相对角度控制
-  GIMBAL_MOTIONLESS,     //云台在遥控器无输入一段时间后保持不动，避免陀螺仪漂移
-} gimbal_behaviour_e;
+
 
 
 //extern const Gimbal_Motor_t *get_yaw_motor_point(void);
