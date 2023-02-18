@@ -13,7 +13,6 @@ pid_type_def chassis_angle_pid[4];//定义底盘结构体
 const motor_measure_t *motor_data;	//声明电机结构体指针(用于存储can读数)
 const pid_type_def *pid_speed;
 const pid_type_def *pid_angld;
-extern int s0_flag;
 
 #define LimitMax(input, max)   \
     {                          \

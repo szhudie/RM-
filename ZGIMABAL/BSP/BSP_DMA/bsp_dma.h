@@ -77,7 +77,6 @@ void Get_Remote_info(RC_Ctrl_t *rc_ctrl ,  uint8_t *sbus_buf);
 const RC_Ctrl_t *get_remote_control_point(void);
 extern RC_Ctrl_t RC_CtrlData ;
 extern uint8_t rc_RxBuffer[128];
-extern int s0_flag;
 
 
 

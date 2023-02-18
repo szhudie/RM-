@@ -12,7 +12,6 @@ uint8_t gk_RxBuffer[gk_data_size];
 PC_GET_DATA pc_data = {0};
  RC_Ctrl_t RC_CtrlData ; //遥控器结构体类型
  uint16_t	temp; //判断接收是否18字节
- int s0_flag=0;  //根据遥控器设定模式标志位
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart6;  
 //extern uint32_t Reset;//判断遥控是否掉线
@@ -117,10 +116,6 @@ void Get_Remote_info(RC_Ctrl_t *rc_ctrl ,uint8_t *sbus_buf)
     rc_ctrl->rc.s[0] = ((sbus_buf[5] >> 4) & 0x0003);                  //!< Switch left
     rc_ctrl->rc.s[1] = ((sbus_buf[5] >> 4) & 0x000C) >> 2;	//!< Switch right
 	
-	  //s0_flag 遥控器标志位
-	  if(rc_ctrl->rc.s[0]==1)s0_flag=1;
-	  else if(rc_ctrl->rc.s[0]==3)s0_flag=3;
-	  else if(rc_ctrl->rc.s[0]==2)s0_flag=2;
 	
     rc_ctrl->mouse.x = sbus_buf[6] | (sbus_buf[7] << 8);                    //!< Mouse X axis
     rc_ctrl->mouse.y = sbus_buf[8] | (sbus_buf[9] << 8);                    //!< Mouse Y axis

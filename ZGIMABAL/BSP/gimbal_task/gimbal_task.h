@@ -54,18 +54,11 @@
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 100.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 0.0f
 
-//任务初始化 空闲一段时间
-#define GIMBAL_TASK_INIT_TIME 201
 //yaw,pitch控制通道以及状态开关通道
 #define YawChannel 2
 #define PitchChannel 3
 #define ModeChannel 0
-//掉头180 按键
-#define TurnKeyBoard KEY_PRESSED_OFFSET_F
-//掉头云台速度
-#define TurnSpeed 0.04f
-//测试按键尚未使用
-#define TestKeyBoard KEY_PRESSED_OFFSET_R
+
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_deadband 10
 //云台控制周期

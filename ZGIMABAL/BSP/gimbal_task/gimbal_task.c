@@ -71,7 +71,7 @@ void gimbal_task(void const * argument)
 		gimbal_control.gimbal_pitch_motor.gimbal_motor_gyro_pid.Kp=Pitch_speed_pid[0];
 		gimbal_control.gimbal_pitch_motor.gimbal_motor_gyro_pid.Ki=Pitch_speed_pid[1];
 		gimbal_control.gimbal_pitch_motor.gimbal_motor_gyro_pid.Kd=Pitch_speed_pid[2];
-				gimbal_control.gimbal_pitch_motor.gimbal_motor_gyro_pid.max_iout=pitch_gyro_max_iout;
+		gimbal_control.gimbal_pitch_motor.gimbal_motor_gyro_pid.max_iout=pitch_gyro_max_iout;
 		gimbal_control.gimbal_pitch_motor.gimbal_motor_gyro_pid.max_out=pitch_gyro_out;
 		
 		gimbal_control.gimbal_pitch_motor.gimbal_motor_absolute_angle_pid.RC_DF = RC_DF;
@@ -130,29 +130,31 @@ static void GIMBAL_Init(Gimbal_Control_t *gimbal_init)
     //初始化电机模式
     gimbal_init->gimbal_yaw_motor.gimbal_motor_mode = gimbal_init->gimbal_yaw_motor.last_gimbal_motor_mode = GIMBAL_MOTOR_RAW;
     gimbal_init->gimbal_pitch_motor.gimbal_motor_mode = gimbal_init->gimbal_pitch_motor.last_gimbal_motor_mode = GIMBAL_MOTOR_RAW;
-	/****************************YAW轴电机PID初始化**************************************/
-	//初始化yaw电机pid
+/****************************YAW轴电机PID初始化**************************************/
+	  //初始化yaw电机pid
     GIMBAL_PID_Init(&gimbal_init->gimbal_yaw_motor.gimbal_motor_absolute_angle_pid, YAW_GYRO_ABSOLUTE_PID_MAX_OUT, YAW_GYRO_ABSOLUTE_PID_MAX_IOUT, YAW_GYRO_ABSOLUTE_PID_KP, YAW_GYRO_ABSOLUTE_PID_KI, YAW_GYRO_ABSOLUTE_PID_KD);
     GIMBAL_PID_Init(&gimbal_init->gimbal_yaw_motor.gimbal_motor_relative_angle_pid, YAW_ENCODE_RELATIVE_PID_MAX_OUT, YAW_ENCODE_RELATIVE_PID_MAX_IOUT, YAW_ENCODE_RELATIVE_PID_KP, YAW_ENCODE_RELATIVE_PID_KI, YAW_ENCODE_RELATIVE_PID_KD);
     PID_init(&gimbal_init->gimbal_yaw_motor.gimbal_motor_gyro_pid, 1, Yaw_speed_pid, YAW_SPEED_PID_MAX_OUT, YAW_SPEED_PID_MAX_IOUT);
-//模糊PID初始化
-	static fp32 Yaw_Fuzzy_Angle_PID[3] = {15,0.01,0};
-	static fp32 Yaw_Error_scope[4] = {0,0.05,0.10,0.15};
-	static fp32 Yaw_Err_Change_scope[4] = {0,0.10,0.20,0.30};
-	static fp32 Yaw_Count_Compensation[3] = {220,20,200};
-	Fuzzy_Pid_Init(&gimbal_init->gimbal_yaw_motor.Fuzzy_Pid,Yaw_Fuzzy_Angle_PID,Yaw_Error_scope,Yaw_Err_Change_scope,YAW_GYRO_ABSOLUTE_PID_MAX_OUT,YAW_GYRO_ABSOLUTE_PID_MAX_IOUT,YAW_POSITION,Yaw_Count_Compensation);
+    //模糊PID初始化
+	  static fp32 Yaw_Fuzzy_Angle_PID[3] = {15,0.01,0};
+	  static fp32 Yaw_Error_scope[4] = {0,0.05,0.10,0.15};
+	  static fp32 Yaw_Err_Change_scope[4] = {0,0.10,0.20,0.30};
+	  static fp32 Yaw_Count_Compensation[3] = {220,20,200};
+	  Fuzzy_Pid_Init(&gimbal_init->gimbal_yaw_motor.Fuzzy_Pid,Yaw_Fuzzy_Angle_PID,Yaw_Error_scope,Yaw_Err_Change_scope,YAW_GYRO_ABSOLUTE_PID_MAX_OUT,YAW_GYRO_ABSOLUTE_PID_MAX_IOUT,YAW_POSITION,Yaw_Count_Compensation);
 /****************************PIT轴电机PID初始化**************************************/	 
-	//初始化pitch电机pid
+	  //初始化pitch电机pid
     GIMBAL_PID_Init(&gimbal_init->gimbal_pitch_motor.gimbal_motor_absolute_angle_pid, PITCH_GYRO_ABSOLUTE_PID_MAX_OUT, PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT, PITCH_GYRO_ABSOLUTE_PID_KP, PITCH_GYRO_ABSOLUTE_PID_KI, PITCH_GYRO_ABSOLUTE_PID_KD);
     GIMBAL_PID_Init(&gimbal_init->gimbal_pitch_motor.gimbal_motor_relative_angle_pid, PITCH_ENCODE_RELATIVE_PID_MAX_OUT, PITCH_ENCODE_RELATIVE_PID_MAX_IOUT, PITCH_ENCODE_RELATIVE_PID_KP, PITCH_ENCODE_RELATIVE_PID_KI, PITCH_ENCODE_RELATIVE_PID_KD);
     PID_init(&gimbal_init->gimbal_pitch_motor.gimbal_motor_gyro_pid, 1, Pitch_speed_pid, PITCH_SPEED_PID_MAX_OUT, PITCH_SPEED_PID_MAX_IOUT);
-	//模糊PID初始化
-	static fp32 Pit_Fuzzy_Angle_PID[3] = {40,0.02,0};
-	static fp32 Pit_Error_scope[4] = {0,0.3,0.6,0.9};
-	static fp32 Pit_Err_Change_scope[4] = {0,0.10,0.20,0.30};
-	static fp32 Pit_Count_Compensation[3] = {100,20,200};
-	Fuzzy_Pid_Init(&gimbal_init->gimbal_pitch_motor.Fuzzy_Pid,Pit_Fuzzy_Angle_PID,Pit_Error_scope,Pit_Err_Change_scope,PITCH_GYRO_ABSOLUTE_PID_MAX_OUT,PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT,POSITION,Pit_Count_Compensation);
-    GIMBAL_Feedback_Update(&gimbal_control);//云台数据反馈
+	  //模糊PID初始化
+	  static fp32 Pit_Fuzzy_Angle_PID[3] = {40,0.02,0};
+	  static fp32 Pit_Error_scope[4] = {0,0.3,0.6,0.9};
+	  static fp32 Pit_Err_Change_scope[4] = {0,0.10,0.20,0.30};
+	  static fp32 Pit_Count_Compensation[3] = {100,20,200};
+	  Fuzzy_Pid_Init(&gimbal_init->gimbal_pitch_motor.Fuzzy_Pid,Pit_Fuzzy_Angle_PID,Pit_Error_scope,Pit_Err_Change_scope,PITCH_GYRO_ABSOLUTE_PID_MAX_OUT,PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT,POSITION,Pit_Count_Compensation);
+	  
+		//云台数据反馈
+    GIMBAL_Feedback_Update(&gimbal_control);
 		//设定值等于当前值 防止开始电机转动
     gimbal_init->gimbal_yaw_motor.absolute_angle_set = gimbal_init->gimbal_yaw_motor.absolute_angle;
     gimbal_init->gimbal_yaw_motor.relative_angle_set = gimbal_init->gimbal_yaw_motor.relative_angle;
